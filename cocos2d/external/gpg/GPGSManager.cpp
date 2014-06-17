@@ -1,24 +1,8 @@
 #include "GPGSManager.h"
-
-#ifdef __APPLE__
-//
-//Logging for CoreFoundation
-//
-#include <CoreFoundation/CoreFoundation.h>
-extern "C" void NSLog(CFStringRef format, ...);
-const int32_t BUFFER_SIZE = 256;
-#define LOGI(...) {char c[BUFFER_SIZE];\
-snprintf(c,BUFFER_SIZE,__VA_ARGS__);\
-CFStringRef str = CFStringCreateWithCString(kCFAllocatorDefault, c, kCFStringEncodingMacRoman);\
-NSLog(str);\
-CFRelease(str);\
-}
-#else
 #include "android/Log.h"
-#define DEBUG_TAG "main"
-#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, DEBUG_TAG, __VA_ARGS__))
 
-#endif
+#define DEBUG_TAG "gpgslog"
+#define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO, DEBUG_TAG, __VA_ARGS__))
 
 bool GPGSManager::isSignedIn = false;
 std::unique_ptr<gpg::GameServices> GPGSManager::gameServices;
